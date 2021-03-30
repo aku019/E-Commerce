@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import { Card } from 'react-bootstrap'
+import { Card,Badge } from 'react-bootstrap'
 import Rating from './Rating'
 
 const Product = ({product}) => {
@@ -14,14 +14,6 @@ const Product = ({product}) => {
             <Link to={`/product/${product._id}`} >
                 <Card.Title as='div' ><strong>{product.name}</strong></Card.Title>
             </Link>
-
-            <Card.Text as='div'>
-                <Rating value={product.rating} text={`${product.numReviews} reviews`} />
-            </Card.Text>
-
-            {/* <Card.Text as='h3'>
-                ${product.price}
-            </Card.Text> */}
 
             {product.price === product.offerPrice ? (
           <p>
@@ -46,7 +38,28 @@ const Product = ({product}) => {
               % off
             </span>
           </p>
+          
+
         )}
+          
+            <Card.Text as='div'>
+                <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+            </Card.Text>
+        
+
+            {/* <Card.Text as='h3'>
+                ${product.price}
+            </Card.Text> */}
+
+            
+         
+        <div className="input-group">
+        <h7>
+        <Badge variant="secondary">{product.category}</Badge>
+        
+  </h7>
+       
+        </div>
 
             </Card.Body>
         </Card>

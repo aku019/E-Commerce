@@ -1,6 +1,31 @@
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
 
+
+
+import { createRequire } from 'module';
+import { Console } from 'console'
+ const require = createRequire(import.meta.url);
+ const Razorpay = require('razorpay');
+const crypto = require("crypto");
+const express = require('express');
+import dotenv from 'dotenv'
+dotenv.config();
+const router = express.Router();
+ const rzpKey = process.env.REACT_APP_RZP_KEY_ID;
+ const secret = process.env.RAZORPAY_API_SECRET;
+const currency = 'INR';
+
+const razorpay = new Razorpay({
+    key_id: process.env.REACT_APP_RZP_KEY_ID,
+    key_secret: secret
+});
+
+// const razorpay = new Razorpay({
+// 	key_id: 'rzp_test_uGoq5ABJztRAhk',
+// 	key_secret: 'FySe2f5fie9hij1a5s6clk9B'
+// });
+
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private
@@ -21,8 +46,27 @@ const addOrderItems = asyncHandler(async(req, res) => {
             shippingPrice, 
             totalPrice
         })
-
-        const createdOrder = await order.save()
+       // const createdOrder = await order.save()
+       const options = {
+		amount: totalPrice * 100,
+		currency:"INR",
+		receipt: "shortid.generate()"
+	}
+        try {
+            const response = await razorpay.orders.create(options);
+            order.razorpayid=response.id;
+            console.log(response)
+            // res.json({
+            //     id: response.id,
+            //     currency: "INR",
+            //     amount: response.totalPrice
+            // })
+            
+        } catch (error) {
+            console.log(error)
+        }
+       
+        const createdOrder = await order.save();
 
         res.status(201).json(createdOrder)
     }

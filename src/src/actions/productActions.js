@@ -22,7 +22,7 @@ export const listProducts = (keyword = '', pageNumber = '')=> async(dispatch) =>
 export const listProductDetails = (id)=> async(dispatch) => {
     try {
         dispatch({ type:PRODUCT_DETAILS_REQUEST })
-        const { data } = await axios.get(`/api/products/${id}`)
+        const { data } = await axios.get(`http://localhost:4000/api/products/${id}`)
 //http://localhost:4000
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
@@ -56,7 +56,7 @@ export const deleteProduct = (id) => async(dispatch, getState) => {
             }
         }
 
-        await axios.delete(`/api/products/${id}`, config)
+        await axios.delete(`http://localhost:4000/api/products/${id}`, config)
 //http://localhost:4000
         dispatch({
             type: PRODUCT_DELETE_SUCCESS

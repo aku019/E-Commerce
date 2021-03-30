@@ -1,10 +1,12 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {LinkContainer} from 'react-router-bootstrap'
-import {Navbar, Nav, Container, NavDropdown} from 'react-bootstrap'
+import {Navbar, Nav, Container, NavDropdown,Form,FormControl,Button} from 'react-bootstrap'
 import {logout} from '../actions/userActions'
 import SearchBox from './SearchBox'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 
+    // const {cartItems} = cart
 const Header = () => {
 
     const dispatch = useDispatch()
@@ -15,10 +17,16 @@ const Header = () => {
     const logoutHandler = ()=> {
         dispatch(logout())
     }
+    const cart = useSelector(state => state.cart)
+
+    const {cartItems} = cart
+    var item=cartItems.length;
+    // if(item==0)
+    // item="";
 
     return (
         <header>
-           <Navbar bg="dark" variant='dark' expand="lg" collapseOnSelect>
+           <Navbar bg="primary" variant='dark' expand="lg" collapseOnSelect>
                <Container>
                 <LinkContainer to='/'>
                <Navbar.Brand>SportsWorld</Navbar.Brand>
@@ -26,10 +34,14 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <SearchBox/>
+                   
                         <Nav className="ml-auto">
 
                         <LinkContainer to='/cart'>
-                        <Nav.Link><i className="fas fa-shopping-cart"></i> Cart</Nav.Link>
+                          <Nav.Link><i className="fas fa-shopping-cart"></i> Cart({item})</Nav.Link>
+                      
+                        
+
                         </LinkContainer>
 
                         {userInfo ? (

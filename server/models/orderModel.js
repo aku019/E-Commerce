@@ -6,6 +6,12 @@ const orderSchema = mongoose.Schema({
         required: true,
         ref: 'User'
     },
+    razorpayid:{
+        type: String,
+        required: false,
+        default: false
+
+    },
     orderItems: [
         {
             name: {type: String, required: true},

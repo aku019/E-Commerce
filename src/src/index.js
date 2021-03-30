@@ -6,6 +6,8 @@ import './bootstrap.min.css'
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+<script src="https://checkout.razorpay.com/v1/checkout.js" />
+
 
 ReactDOM.render(
   <Provider store={store}>

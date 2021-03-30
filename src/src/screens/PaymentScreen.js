@@ -34,7 +34,7 @@ const PaymentScreen = ({ history }) => {
                 <Form.Label as="legend">Select Method</Form.Label>
 
             <Col>
-                <Form.Check type="radio" label="PayPal or Credit Card" id="PayPal" name="paymentMethod" value={paymentMethod} checked={paymentMethod === 'PayPal'} onChange={(e)=> setPaymentMethod(e.target.value)}></Form.Check>
+                <Form.Check type="radio" label="UPI or Credit Card or Wallet" id="Razorpay" name="paymentMethod" value={"Razorpay"} checked={paymentMethod === 'Razorpay'} onChange={(e)=> setPaymentMethod(e.target.value)}></Form.Check>
                 {/* <Form.Check type="radio" label="PayPal or Credit Card" id="PayPal" name="paymentMethod" value="PayPal" checked={paymentMethod === 'Stripe'} onChange={(e)=> setPaymentMethod(e.target.value)}></Form.Check> */}
             </Col>
 

@@ -6,12 +6,25 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import {login} from '../actions/userActions'
+// import { useAuth } from "../hooks/useAuth";
 
 const LoginScreen = ({location, history}) => {
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState('');
 
+//     const { googleSignin, toggleModal } = useAuth();
+
+//   const responseGoogle = (response) => {
+//     googleSignin(response.tokenId)
+//       .then(() => {
+//         /**close the modal */
+//         toggleModal();
+//       })
+//       .catch((e) => {
+//         alert(e.message);
+//       });
+//   };
     
     const dispatch = useDispatch()
     

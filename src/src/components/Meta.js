@@ -12,9 +12,9 @@ const Meta = ({title, description, keywords}) => {
 }
 
 Meta.defaultProps = {
-    title: 'Welcome To ApexShop',
+    title: 'Welcome To Sports World',
     description: 'We sell the best products for cheap',
-    keywords: 'electronics, buy electronics, cheap electronics'
+    keywords: 'sports, buy sports goods, cheap sports goods'
 }
 
 export default Meta

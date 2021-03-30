@@ -8,6 +8,23 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {getOrderDetails, payOrder, deliverOrder} from '../actions/orderActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants'
+import dotenv from 'dotenv'
+const Razorpay = require('razorpay');
+dotenv.config();
+function loadScript(src) {
+	return new Promise((resolve) => {
+		const script = document.createElement('script')
+		script.src = src
+		script.onload = () => {
+			resolve(true)
+		}
+		script.onerror = () => {
+			resolve(false)
+		}
+		document.body.appendChild(script)
+	})
+}
+
 
 const OrderScreen = ({match, history}) => {
 
@@ -36,10 +53,10 @@ const OrderScreen = ({match, history}) => {
         }
 
         const addPayPalScript = async () => {
-            const { data: clientId } = await axios.get('/api/config/paypal')
+            // const { data: clientId } = await axios.get('/api/config/paypal')
             const script = document.createElement('script')
             script.type = 'text/javascript'
-            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=INR`
+            // script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=INR`
             script.async = true
             script.onload = () => {
                 setSdkReady(true)
@@ -61,6 +78,72 @@ const OrderScreen = ({match, history}) => {
             }
         }
     },[dispatch, order, orderId, successPay, successDeliver, history, userInfo])
+
+    async function displayRazorpay(amt,id,ord) {
+		const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+		if (!res) {
+			alert('Razorpay SDK failed to load. Are you online?')
+			return
+		}
+
+		// const data = await fetch('http://localhost:1337/razorpay', { method: 'POST' }).then((t) =>
+		// 	t.json()
+		// )
+
+		console.log(amt);
+        console.log(typeof amt);
+
+		const options = {
+			key:  process.env.REACT_APP_RZP_KEY_ID,//'rzp_test_FaUMUiP2fDP9lr' ,
+			currency: "INR",//data.currency,
+			amount: amt*100,
+		    order_id:id,
+			name: 'SportsWorld',
+			description: 'Thank you',// for nothing. Please give us some money',
+			image: '',
+            // modal: {
+            //     ondismiss: paymentHandlers.onDismiss || (() => {}),
+            //     escape: false,
+            // },
+            // handler: response => {
+            //     paymentHandlers.onSuccess &&
+            //         paymentHandlers.onSuccess({
+            //             ...response,
+            //             id: res.orderId,
+            //             amount: res.amount,
+            //             currency: res.currency,
+            //         });
+            // },
+			handler: function (response) {
+				 alert(response.razorpay_payment_id)
+				 alert(response.razorpay_order_id)
+				 alert(response.razorpay_signature)
+                 order.isPaid=true;
+                 order.paidAt=Date.now().toLocaleDateString();
+
+                dispatch(payOrder(orderId, true));
+			},
+			prefill: {
+				name:"",
+				email: '',
+				phone_number: ''
+			} 
+		}
+        //const paymentObject = new Razorpay(options)
+		const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+        paymentObject.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+    });
+		
+	}
 
 
     const successPaymentHandler = (paymentResult)=> {
@@ -124,7 +207,7 @@ const OrderScreen = ({match, history}) => {
                                                 </Col>
 
                                                 <Col md={4}>
-                                                    {item.qty} x ${item.price} = ${item.qty * item.price}
+                                                    {item.qty} x ₹{item.price} = ₹{item.qty * item.price}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -145,37 +228,39 @@ const OrderScreen = ({match, history}) => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>${order.itemsPrice}</Col>
+                                    <Col>₹{order.itemsPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${order.shippingPrice}</Col>
+                                    <Col>₹{order.shippingPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Tax</Col>
-                                    <Col>${order.taxPrice}</Col>
+                                    <Col>₹{order.taxPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Total</Col>
-                                    <Col>${order.totalPrice}</Col>
+                                    <Col>₹{order.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             {!order.isPaid && userInfo._id === order.user._id &&(
                                 <ListGroup.Item>
                                     {loadingPay && <Loader/>}
-                                    {!sdkReady ? <Loader/> : (
+                                    {/* {!sdkReady ? <Loader/> : (
                                         <PayPalButton currency="INR" amount={order.totalPrice} onSuccess={successPaymentHandler}/>
-                                    )}
+                                    )} */}
+                                      <Button type="button" className="btn btn-block" onClick={()=>displayRazorpay(order.totalPrice,order.razorpayid,order)}>Pay</Button>
                                 </ListGroup.Item>
+                                //onClick={displayRazorpay(order.totalPrice)}
                             )}
 
                             {loadingDeliver && <Loader/>}

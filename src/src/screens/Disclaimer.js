@@ -6,7 +6,7 @@ const Disclaimer = () => {
       <div className="container">
         <h1 className='text-center py-3'>Disclaimer</h1>
         <p>
-          This (i.e. JABS) is a dummy e-commerce store, build for demonstration
+          This (i.e. Sports World) is a dummy e-commerce store, build for demonstration
           purposes only. Please do not perform any real transactions on this
           website.
         </p>
