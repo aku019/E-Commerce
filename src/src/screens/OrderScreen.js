@@ -187,8 +187,8 @@ const OrderScreen = ({match, history}) => {
                                 <strong>Method: </strong>
                                 {order.paymentMethod}
                             </p>
-                            {order.isPaid ? <Message variant="success">Paid on {order.paidAt}</Message> : <Message variant="danger">Not Paid</Message>}
-                            
+                            {order.isPaid ? <Message variant="success">Order Paid</Message> : <Message variant="danger">Not Paid</Message>}
+                            {/* {order.paidAt} */}
                         </ListGroup.Item>
 
                         <ListGroup.Item>
