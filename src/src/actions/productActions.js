@@ -5,7 +5,7 @@ import { PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_
 export const listProducts = (keyword = '', pageNumber = '')=> async(dispatch) => {
     try {
         dispatch({ type:PRODUCT_LIST_REQUEST })
-        const { data } = await axios.get(`http://localhost:4000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
+        const { data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
@@ -22,8 +22,8 @@ export const listProducts = (keyword = '', pageNumber = '')=> async(dispatch) =>
 export const listProductDetails = (id)=> async(dispatch) => {
     try {
         dispatch({ type:PRODUCT_DETAILS_REQUEST })
-        const { data } = await axios.get(`http://localhost:4000/api/products/${id}`)
-//http://localhost:4000
+        const { data } = await axios.get(`/api/products/${id}`)
+//
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
             payload: data
@@ -56,8 +56,8 @@ export const deleteProduct = (id) => async(dispatch, getState) => {
             }
         }
 
-        await axios.delete(`http://localhost:4000/api/products/${id}`, config)
-//http://localhost:4000
+        await axios.delete(`/api/products/${id}`, config)
+//
         dispatch({
             type: PRODUCT_DELETE_SUCCESS
         })
@@ -85,7 +85,7 @@ export const createProduct = () => async(dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
-        const uri = 'http://localhost:4000/api/products';
+        const uri = '/api/products';
 
         const {data} = await axios.post(uri, {}, config)
 
@@ -119,7 +119,7 @@ export const updateProduct = (product) => async(dispatch, getState) => {
             }
         }
    
-        const {data} = await axios.put(`http://localhost:4000/api/products/${product._id}`, product, config)
+        const {data} = await axios.put(`/api/products/${product._id}`, product, config)
 
         dispatch({
             type: PRODUCT_UPDATE_SUCCESS,
@@ -151,7 +151,7 @@ export const createProductReview = (productId, review) => async(dispatch, getSta
             }
         }
 
-        await axios.post(`http://localhost:4000/api/products/${productId}/reviews`, review, config)
+        await axios.post(`/api/products/${productId}/reviews`, review, config)
 
         dispatch({
             type: PRODUCT_CREATE_REVIEW_SUCCESS
@@ -170,7 +170,7 @@ export const createProductReview = (productId, review) => async(dispatch, getSta
 export const listTopProducts = ()=> async(dispatch) => {
     try {
         dispatch({ type:PRODUCT_TOP_REQUEST })
-        const { data } = await axios.get(`http://localhost:4000/api/products/top`)
+        const { data } = await axios.get(`/api/products/top`)
 
         dispatch({
             type: PRODUCT_TOP_SUCCESS,

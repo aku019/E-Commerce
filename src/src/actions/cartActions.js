@@ -2,7 +2,8 @@ import axios from 'axios'
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS, CART_SAVE_PAYMENT_METHOD } from '../constants/cartConstants'
 
 export const addToCart = (id, qty) => async(dispatch, getState)=>{
-    const {data} = await axios.get(`http://localhost:4000/api/products/${id}`)
+    const {data} = await axios.get(`/api/products/${id}`)
+    //http://localhost:4000
 
     dispatch({
         type: CART_ADD_ITEM,
