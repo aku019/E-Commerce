@@ -3,43 +3,7 @@
 // import { Link } from "react-router-dom";
 
 
-// const Footer = () => {
-//     return (
-//         <footer>
-//            <Container>
-//                <Row>
-               
-//              {/* <Col> */}
-//              <div className="level-item">
-//                <Link to="/terms">Terms</Link>
-//              </div>
-//              {/* </Col> */}
-//              {/* <Col> */}
-//              <div className="level-item">
-//                <Link to="/privacy">Privacy Policy</Link>
-//              </div>
-//              {/* </Col> */}
-//              {/* <Col> */}
-//              <div className="level-item">
-//                <Link to="/refund">Refund Policy</Link>
-//              </div>
-//              {/* </Col> */}
-//              {/* <Col> */}
-//              <div className="level-item">
-//                <Link to="/disclaimer">Disclaimer</Link>
-//             </div>
-//             {/* </Col> */}
 
-//                    {/* <Col className='text-center py-3'>
-//                        Copyright &copy; ApexShop
-//                    </Col> */}
-//                </Row>
-//            </Container>
-//         </footer>
-//     )
-// }
-
-//  export default Footer
 
 import React from "react";
 import { Link } from "react-router-dom";
