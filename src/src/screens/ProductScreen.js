@@ -47,6 +47,7 @@ const ProductScreen = ({history, match}) => {
         // history.push(`/cart/${match.params.id}?qty=${qty}`)
         dispatch(addToCart(product._id, qty))
         // history.push('/cart')
+        alert("Added to cart");
     }
 
     const submitHandler = (e)=> {
