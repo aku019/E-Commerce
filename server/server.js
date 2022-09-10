@@ -51,6 +51,7 @@ if(process.env.NODE_ENV === 'developement'){
 app.use(express.json()) ;
 
 app.use('/api/products', productRoutes)
+console.log('in server')
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
@@ -75,6 +76,6 @@ app.use(notFound)
 app.use(errorHandler)
 
  
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 5000
 
 app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold))

@@ -9,6 +9,7 @@ const userSchema = new Schema({
     },
     firstName: String,
     lastName: String,
+    phone: String,
     createdAt: {
         type: Date,
         default: Date.now()

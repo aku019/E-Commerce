@@ -20,6 +20,9 @@ const Footer = () => {
               </p>
             </div>
             <div className="level-item">
+              <Link to="/call">Get a Call</Link>
+            </div>
+            <div className="level-item">
               <Link to="/terms">Terms</Link>
             </div>
             <div className="level-item">
@@ -31,6 +34,7 @@ const Footer = () => {
             <div className="level-item">
               <Link to="/disclaimer">Disclaimer</Link>
             </div>
+            
           </div>
           <div className="level-right">
             <div className="level-item">

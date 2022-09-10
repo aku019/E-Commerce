@@ -21,6 +21,7 @@ import Disclaimer from './screens/Disclaimer'
 import Refund from './screens/Refund'
 import Privacy from './screens/Privacy'
 import Terms from './screens/Terms'
+import CallScreen from './screens/CallScreen'
 import NotFound from './screens/NotFound'
 
 const App = ()=> {
@@ -56,6 +57,9 @@ const App = ()=> {
           </Route>
           <Route path="/privacy">
             <Privacy />
+          </Route>
+          <Route path="/call">
+            <CallScreen />
           </Route>
           <Route path="/refund">
             <Refund />

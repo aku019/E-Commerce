@@ -10,6 +10,7 @@ app.use(cors());
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
+console.log('in utils routes')
 router.use('/users', users);
 
 router.use('/sessions', sessions);

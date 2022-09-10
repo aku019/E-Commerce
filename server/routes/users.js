@@ -5,13 +5,17 @@ const UserCredential = require('../models/user-credential');
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 
+const axios = require('axios');
+
+
 router.post('/', (req, res) => {
     if (!req.body) {
         res.status(400).send({error: "Email and Password not present in request"});
         return;
     }
 
-    const { email, password } = req.body;
+    const { email, password,phone } = req.body;
+    console.log("routes"+phone);
 
     if (!email) {
         res.status(400).send({error: "Email not present in request"});
@@ -58,6 +62,52 @@ router.get('/:userId', (req, res) => {
     }).catch(() => {
         res.status(500).send({ error: "Internal Server Error" });
     });
+});
+
+
+router.get('/call', (req, res) => {
+   
+    phone='';
+    id = req.session.userId;
+    User.findOne({ _id:  id}).then(user => {
+        // res.send(user);
+        phone = user.phone;
+    }).catch(() => {
+        res.status(500).send({ error: "Internal Server Error" });
+    });
+
+
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Accept", "application/json");
+myHeaders.append("x-api-key", "AlZrlnRSbZ7l3l8YBIkT42WHwMavi84z2pydzX2G");
+myHeaders.append("Authorization", "339f82d8-45f5-4807-8d4d-5e4497fe7bc1");
+
+var raw = JSON.stringify({
+  "k_number": "+919986734558",
+  "agent_number": "+919903840588",
+  "customer_number": phone,
+  "caller_id": ""
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://kpi.knowlarity.com/Basic/v1/account/call/makecall", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+
+
+
+
+
+
 });
 
 router.put('/me', auth.authenticate, (req, res) => {
