@@ -4,12 +4,42 @@ import {useDispatch, useSelector} from 'react-redux'
 
 const axios = require('axios');
 
-const CallScreen = () => {
+
+  const checkOutHandler = (history)=>{
+    history.push('/login?redirect=call')
+}
+
+
+
+
+const CallScreen = ({history}) => {
    
     const userLogin = useSelector(state => state.userLogin)
     const {userInfo} = userLogin;
 
     console.log(userInfo);
+
+    if(!userInfo)
+    {
+      checkOutHandler(history);
+      return (
+        <section className="section">
+          <div className="container">
+            <div className="has-text-centered">
+            
+              <h1 className='text-center py-3'>Not Logged In!</h1>
+             
+            </div>
+          </div>
+        </section>
+      );
+      
+    }
+    
+  
+
+
+    
 
 
 
@@ -45,7 +75,8 @@ fetch("https://kpi.knowlarity.com/Basic/v1/account/call/makecall", requestOption
     <section className="section">
       <div className="container">
         <div className="has-text-centered">
-          <h1 className='text-center py-3'>Thank you for opting in, we will call you shortly!</h1>
+        
+          <h1 className='text-center py-3'>Thank you for requesting a call, we will be in touch  shortly!</h1>
           <p>
            Hi, We have registered your request. You can expect call any minute.
           </p>

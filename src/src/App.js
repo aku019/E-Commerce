@@ -39,6 +39,7 @@ const App = ()=> {
         <Route exact={true} path='/profile' component={ProfileScreen}/>
         <Route exact={true} path='/product/:id' component={ProductScreen}/>
         <Route exact={true} path='/cart/:id?' component={CartScreen}/>
+        <Route exact={true} path='/call' component={CallScreen}/>
         <Route exact={true} path='/admin/userlist' component={UserListScreen}/>
         <Route exact={true} path='/admin/productlist' component={ProductListScreen}/>
         <Route exact={true} path='/admin/productlist/:pageNumber' component={ProductListScreen}/>
@@ -58,9 +59,10 @@ const App = ()=> {
           <Route path="/privacy">
             <Privacy />
           </Route>
-          <Route path="/call">
+          {/* <Route exact={true} path="/call">
             <CallScreen />
-          </Route>
+          </Route> */}
+          
           <Route path="/refund">
             <Refund />
           </Route>

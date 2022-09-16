@@ -44,7 +44,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <b>Asish</b>
+                <b>Instrumentals</b>
               </a>
             </div>
           </div>

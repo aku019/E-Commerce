@@ -58,6 +58,7 @@ router.get('/me', auth.authenticate, (req, res) => {
 
 router.get('/:userId', (req, res) => {
     User.findOne({ _id: req.params.userId }).then(user => {
+        console.log(user);
         res.send(user);
     }).catch(() => {
         res.status(500).send({ error: "Internal Server Error" });
